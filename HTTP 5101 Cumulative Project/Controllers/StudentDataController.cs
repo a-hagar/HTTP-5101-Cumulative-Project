@@ -46,9 +46,6 @@ namespace HTTP_5101_Cumulative_Project.Controllers
                 string StudentNum = (string)ResultSet["studentnumber"];
                 DateTime EnrolDate = (DateTime)ResultSet["enroldate"];
 
-
-
-
                 Student newStudent = new Student();
                 newStudent.StudentId = StudentId;
                 newStudent.StudentFname = StudentFname;

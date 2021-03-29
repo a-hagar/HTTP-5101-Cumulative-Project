@@ -12,8 +12,6 @@ namespace HTTP_5101_Cumulative_Project.Models
         public string StudentLname;
         public string StudentNum;
         public DateTime EnrolDate;
-        public string ClassCode;
-        public string ClassName;
-        public int ClassId;
+
     }
 }
