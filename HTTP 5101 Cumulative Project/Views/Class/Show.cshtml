@@ -1,0 +1,13 @@
+﻿@model HTTP_5101_Cumulative_Project.Models.Class
+@{
+    ViewBag.Title = "Show";
+}
+
+<a class="link" href="/Class/List">Back to Classes</a>
+<div class="more-data">
+    <h2>Class: @Model.ClassCode.ToUpper() @Model.ClassName</h2>
+    <p>Taught by:  <a href="/Teacher/Show/@Model.TeacherId">@Model.TeacherFname @Model.TeacherLname</a></p>
+    <p>Class ID: @Model.ClassId</p>
+    <p>Start Date: @Model.StartDate.ToString("dddd, MMMM dd, yyyy")</p>
+    <p>Finish Date: @Model.FinishDate.ToString("dddd, MMMM dd, yyyy")</p>
+</div>

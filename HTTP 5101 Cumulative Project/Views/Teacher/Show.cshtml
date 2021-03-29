@@ -1,0 +1,13 @@
+﻿@model HTTP_5101_Cumulative_Project.Models.Teacher
+@{
+    ViewBag.Title = "Show";
+}
+
+<a class="link" href="/Teacher/List">Back to Teachers</a>
+<div class="more-data">
+    <h2>Teacher: @Model.TeacherFname @Model.TeacherLname</h2>
+    <p>TeacherId: @Model.TeacherId</p>
+    <p>Employee #: @Model.EmployeeNum</p>
+    <p>Hire Date: @Model.HireDate.ToString("dddd, dd MMMM yyyy")</p>
+    <p>Salary: $@Model.Salary</p>
+</div>

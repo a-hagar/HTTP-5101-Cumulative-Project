@@ -1,0 +1,14 @@
+﻿@model HTTP_5101_Cumulative_Project.Models.Student
+@{
+    ViewBag.Title = "Show";
+}
+
+<a class="link" href="/Student/List">Back to Students</a>
+<div class="more-data">
+    <h2>Student: @Model.StudentFname @Model.StudentLname</h2>
+    <p>Student Id: @Model.StudentId</p>
+    <p>Student #: @Model.StudentNum</p>
+    <p>Enrolment Date: @Model.EnrolDate.ToString("dddd, MMMM dd , yyyy")</p>
+
+</div>
+
