@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using HTTP_5101_Cumulative_Project.Models;
 using MySql.Data.MySqlClient;
+using System.Diagnostics;
 
 namespace HTTP_5101_Cumulative_Project.Controllers
 {
@@ -15,26 +16,33 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 
         /// <summary>
         /// Returns a list of students from the database
-        /// <example> GET api/StudentData/ListStudents </example>
         /// </summary>
-        /// <returns>
-        /// A list of student names, student names, and the enrolment dates
-        /// </returns>
+        /// <example> GET api/StudentData/ListStudents </example>
+        /// <returns> A list of student names, student names, and the enrolment dates </returns>
+        /// <example> GET api/StudentData/ListStudents/List?SearchKey=name</example>
+        /// <returns> A result of student(s) that partially match the search term </returns> 
+
         [HttpGet]
-        [Route("api/StudentData/ListStudents")]
-        public IEnumerable<Student> ListStudents()
+        [Route("api/StudentData/ListStudents/{SearchKey?}")]
+        public IEnumerable<Student> ListStudents(string SearchKey = null)
         {
+            //connects to database and establishes connection between server & database
             MySqlConnection Conn = Student.AccessDatabase();
 
             Conn.Open();
 
             MySqlCommand cmd = Conn.CreateCommand();
 
-            //select query from the student table
-            cmd.CommandText = "SELECT studentid, studentfname, studentlname, studentnumber, enroldate from students";
+            //select query from the student table with search cababilities
+            cmd.CommandText = "SELECT studentid, studentfname, studentlname, studentnumber, enroldate from students WHERE studentfname LIKE @key OR studentlname LIKE @key  OR (concat(studentfname, ' ', studentlname)) LIKE @key";
+
+            //parameters for the searchkey
+            cmd.Parameters.AddWithValue("@key", "%" + SearchKey + "%");
+            cmd.Prepare();
 
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
+            //Creating a new list for classes
             List<Student> Students = new List<Student> { };
 
 
@@ -53,12 +61,14 @@ namespace HTTP_5101_Cumulative_Project.Controllers
                 newStudent.StudentNum = StudentNum;
                 newStudent.EnrolDate = EnrolDate;
 
-
+                //Adds a new student to the list
                 Students.Add(newStudent);
 
             }
+            //Closes connection to MySql database
             Conn.Close();
 
+            //Returns list of all Classes
             return Students;
 
         }
@@ -66,23 +76,24 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 
         /// <summary>
         /// Returns a list of classes from the database
-        /// <example> GET api/ClassData/FindClass/{id} </example>
+        /// <param name="id"/> Student Id number </param>
         /// </summary>
-        /// <returns>
-        /// A student name, id, student number, and enrolment date,
-        /// </returns>
+        /// <example> GET api/ClassData/FindClass/{id} </example
+        /// <returns> A student name, id, student number, and enrolment date </returns>
         [HttpGet]
         [Route("api/StudentData/FindStudent/{id}")]
         public Student FindStudent(int id)
         {
             Student newStudent = new Student();
 
+            //connects to database and establishes connection between server & database
             MySqlConnection Conn = Student.AccessDatabase();
 
             Conn.Open();
 
             MySqlCommand cmd = Conn.CreateCommand();
 
+            //select query from the student table with where statement 
             cmd.CommandText = "SELECT studentid, studentfname, studentlname, studentnumber, enroldate from students where studentid = " + id;
 
             MySqlDataReader ResultSet = cmd.ExecuteReader();
@@ -103,6 +114,7 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 
 
             }
+            //Returns list of all Classes
             return newStudent;
         }
 

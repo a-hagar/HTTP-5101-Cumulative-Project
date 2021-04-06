@@ -6,6 +6,12 @@
 <h2>Students</h2>
 <p>This pages shows a list of information of all students</p>
 
+<form id="search" action="/Student/List" method="get">
+    <input type="text" name="SearchKey" placeholder="Enter a name here" />
+    <input type="submit" value="Search!" />
+</form>
+<span>@Model.Count() Result(s) Found</span>
+
 <div>
     <h2>List of Students</h2>
     @foreach (var student in Model)

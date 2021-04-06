@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using HTTP_5101_Cumulative_Project.Models;
 using MySql.Data.MySqlClient;
+using System.Diagnostics;
 
 namespace HTTP_5101_Cumulative_Project.Controllers
 {
@@ -15,15 +16,18 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 
         /// <summary>
         /// Returns a list of classes from the database
-        /// <example> GET api/ClassData/ListClasses </example>
+        /// <example> GET api/ClassData/ListClasses</example>
         /// </summary>
-        /// <returns>
-        /// A list of classes names, course codes, and the ids and names of the teachers of the course
-        /// </returns>
+        /// <returns> A list of classes names, course codes, and the ids and names of the teachers of the course </returns>
+        /// <example> GET api/ClassData/ListClasses/List?SearchKey=name</example>
+        /// <returns> A result of class(es) that partially match the search term </returns>
+
+
         [HttpGet]
-        [Route("api/ClassData/ListClasses")]
-        public IEnumerable<Class> ListClasses()
+        [Route("api/ClassData/ListClasses/{SearchKey?}")]
+        public IEnumerable<Class> ListClasses(string SearchKey = null)
         {
+            //connects to database and establishes connection between server & database
             MySqlConnection Conn = Class.AccessDatabase();
 
             Conn.Open();
@@ -31,13 +35,18 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             MySqlCommand cmd = Conn.CreateCommand();
 
             //select query with a join with the teachers table 
-            cmd.CommandText = "SELECT classes.classid, classes.classname, classes.classcode, classes.startdate, classes.finishdate, teachers.teacherid, teachers.teacherfname, teachers.teacherlname FROM classes join teachers on classes.teacherid = teachers.teacherid";
+            cmd.CommandText = "SELECT classes.classid, classes.classname, classes.classcode, classes.startdate, classes.finishdate, teachers.teacherid, teachers.teacherfname, teachers.teacherlname FROM classes join teachers on classes.teacherid = teachers.teacherid WHERE classes.classname LIKE @key OR classes.classcode LIKE @key";
+
+            //parameters for the searchkey
+            cmd.Parameters.AddWithValue("@key", "%" + SearchKey + "%");
+            cmd.Prepare();
 
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
+            //Creating a new list for classes
             List<Class> Classes = new List<Class> { };
 
-
+            //
             while (ResultSet.Read())
             {
                 int ClassId = (int)ResultSet["classid"];
@@ -60,11 +69,14 @@ namespace HTTP_5101_Cumulative_Project.Controllers
                 newClass.TeacherFname = TeacherFname;
                 newClass.TeacherLname = TeacherLname;
 
+                //Adds a new class to the list
                 Classes.Add(newClass);
 
             }
+            //Closes connection to MySql database
             Conn.Close();
 
+            //Returns list of all Classes
             return Classes;
 
         }

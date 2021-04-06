@@ -6,6 +6,12 @@
 <h2>Classes</h2>
 <p>This pages shows a list of information of all classes in the HTTP program.</p>
 
+<form id="search" action="/Class/List" method="get">
+    <input type="text" name="SearchKey" placeholder="Enter a class name here" />
+    <input type="submit" value="Search!" />
+</form>
+<span>@Model.Count() Result(s) Found</span>
+
 <div>
     <h2>List of Classes</h2>
     @foreach (var Class in Model)

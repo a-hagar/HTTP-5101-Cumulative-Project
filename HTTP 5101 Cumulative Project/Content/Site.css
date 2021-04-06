@@ -18,8 +18,8 @@ textarea {
 
 .link {
     text-align: right;
-    margin-top: 15px;
-    margin-right: 80px;
+    margin-top: 50px;
+    margin-right: 180px;
     margin-bottom: 30px;
     float: right;
 }
@@ -31,5 +31,5 @@ textarea {
 }
 
 h2{
-    margin-top: 30px;
+    margin-top: 80px;
 }

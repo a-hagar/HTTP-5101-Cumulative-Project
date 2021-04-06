@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using HTTP_5101_Cumulative_Project.Models;
+using System.Diagnostics;
 
 namespace HTTP_5101_Cumulative_Project.Controllers
 {
@@ -16,10 +17,14 @@ namespace HTTP_5101_Cumulative_Project.Controllers
         }
 
         // GET: /Class/List
-        public ActionResult List()
+        public ActionResult List(string SearchKey = null)
         {
+            //debug comments for searching the class table
+            Debug.WriteLine("The input search key is ");
+            Debug.WriteLine(SearchKey);
+
             ClassDataController controller = new ClassDataController();
-            IEnumerable<Class> Classes = controller.ListClasses();
+            IEnumerable<Class> Classes = controller.ListClasses(SearchKey);
 
             return View(Classes);
         }

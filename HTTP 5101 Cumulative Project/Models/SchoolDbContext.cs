@@ -10,7 +10,7 @@ namespace HTTP_5101_Cumulative_Project.Models
     {
 
         /// <summary>
-        /// connects table to 
+        /// connects to local server and database
         /// </summary>
         private static string User { get { return "root"; } }
         private static string Password { get { return "root"; } }
