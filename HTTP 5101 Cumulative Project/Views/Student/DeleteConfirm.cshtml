@@ -6,10 +6,10 @@
     <a class="link" href="/Student/Show/@Model.StudentId">Go Back</a>
 </nav>
 
-<h2>Are you sure you want to delete this teacher?</h2>
+<h2>Are you sure you want to delete this student's info?</h2>
 <p>@Model.StudentFname @Model.StudentLname</p>
 
-<p>This cannot be undone!</p>
+<p style="font-weight:700;">This cannot be undone!</p>
 <form method="post" action="/Student/Delete/@Model.StudentId">
-    <input type="submit" style="margin: 0 auto; display: block;" value="Delete Student"/>
+    <input type="submit" class="deleteBtn" value="Delete Student"/>
 </form>

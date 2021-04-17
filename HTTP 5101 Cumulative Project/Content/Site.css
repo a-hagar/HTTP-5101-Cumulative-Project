@@ -5,6 +5,7 @@
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
+    width: 80%;
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -18,12 +19,42 @@ textarea {
 
 .link {
     text-align: right;
-    margin-top: 50px;
-    margin-right: 180px;
-    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-right: 10%;
+    margin-bottom: 20px;
     float: right;
 }
-
+.dellink {
+    text-align: right;
+    margin-top: 30px;
+    margin-left: 10%;
+    margin-bottom: 20px;
+    float: left;
+    color: red;
+}
+.deleteBtn {
+    margin: 0 auto;
+    display: block;
+    background-color: red;
+    height: 40px;
+    width: 160px;
+    border-radius: 5px;
+    border: none;
+    font-weight:500;
+}
+.deleteBtn:hover{
+    background-color:darkred;
+    color:white;
+}
+label{
+    padding-right: 20px;
+}
+input[type=text] {
+    width: 20%;
+}
+#submitBtn{
+    margin-top:20px;
+}
 .more-data{
     margin-top:20px;
     width: 80%;
@@ -31,5 +62,5 @@ textarea {
 }
 
 h2{
-    margin-top: 80px;
+    margin-top: 90px;
 }

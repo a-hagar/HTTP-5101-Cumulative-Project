@@ -1,15 +1,15 @@
-﻿@model HTTP_5101_Cumulative_Project.Models.Class
+﻿@model HTTP_5101_Cumulative_Project.Models.Course
 @{
     ViewBag.Title = "DeleteConfirm";
 }
 <nav>
-    <a class="link" href="/Class/Show/@Model.ClassId">Go Back</a>
+    <a class="link" href="/Class/Show/@Model.CourseId">Go Back</a>
 </nav>
 
-<h2>Are you sure you want to delete this teacher?</h2>
-<p>@Model.ClassCode @Model.ClassName</p>
+<h2>Are you sure you want to delete this course's info?</h2>
+<p>@Model.CourseCode.ToUpper() @Model.CourseName</p>
 
-<p>This cannot be undone!</p>
-<form method="post" action="/Class/Delete/@Model.ClassId">
-    <input type="submit" style="margin: 0 auto; display: block;" value="Delete Course" />
+<p style="font-weight:700;">This cannot be undone!</p>
+<form method="post" action="/Class/Delete/@Model.CourseId">
+    <input type="submit" class="deleteBtn" value="Delete Course" />
 </form>
