@@ -15,7 +15,7 @@
         <span id="errorFname"></span>
     </div>
     <div>
-        <label>Teacher's Last Name: </label>
+        <label>Student's Last Name: </label>
         <input type="text" name="StudentLname" id="lname" />
         <span id="errorLname"></span>
     </div>
@@ -36,11 +36,9 @@
    var studentForm = document.forms.addStudent;
 
    var Fname = document.querySelector("#fname");
-   var Surname = document.querySelector("#name");
+   var Surname = document.querySelector("#lname");
    var StudentNo = document.querySelector("#studentNo");
    var submit = document.querySelector("#submitBtn");
-
-    var ValidNo = /N\{d}4/;
 
     submit.onclick = function validStudent() {
         if (Fname.value == "" || Fname.value !== ) {
@@ -51,7 +49,7 @@
             document.querySelector("#errorLname").innerHTML = "Please enter a valid last name!";
                 return false;
 
-       } else if (StudentNo.value == "" || StudentNo.value !== ValidNo) {
+       } else if (StudentNo.value == "" || StudentNo.value ==null) {
             document.querySelector("#errorStudentNo").innerHTML = "Please enter a valid 5-digit student number!";
                 return false;
 
