@@ -16,10 +16,10 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 
         /// <summary>
         /// Returns a list of classes from the database
-        /// <example> GET api/ClassData/ListClasses</example>
+        /// <example> GET api/CourseData/ListCourses</example>
         /// </summary>
         /// <returns> A list of classes names, course codes, and the ids and names of the teachers of the course </returns>
-        /// <example> GET api/ClassData/ListClasses/List?SearchKey=name</example>
+        /// <example> GET api/CourseData/ListCourses/List?SearchKey=name</example>
         /// <returns> A result of class(es) that partially match the search term </returns>
 
 
@@ -121,7 +121,7 @@ namespace HTTP_5101_Cumulative_Project.Controllers
         /// <summary>
         /// Deletes a class from the database
         /// </summary>
-        /// example api/CourseData/DeleteCourse/200
+        /// example api/CourseData/DeleteCourse/2
         ///  
         [Route("api/CourseData/DeleteCourse/{courseid}")]
         [HttpPost]

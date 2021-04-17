@@ -30,36 +30,36 @@
 
 </form>
 
-@* Comment goes here
+@* testing form validation
 
-   <script defer>
-   var studentForm = document.forms.addStudent;
+    <script defer>
+    var studentForm = document.forms.addStudent;
 
-   var Fname = document.querySelector("#fname");
-   var Surname = document.querySelector("#lname");
-   var StudentNo = document.querySelector("#studentNo");
-   var submit = document.querySelector("#submitBtn");
+    var Fname = addStudent.StudentFname;
+    var Surname = addStudent.StudentLname;
+    var StudentNo = addStudent.StudentNum;
+    var submit = document.querySelector("#submitBtn");
 
-    submit.onclick = function validStudent() {
-        if (Fname.value == "" || Fname.value !== ) {
-            document.querySelector("#errorFname").innerHTML = "Please enter a valid first name!";
-                return false;
+     submit.onclick = function validStudent() {
+         if (Fname.value == "" || Fname.value !== ) {
+             document.querySelector("#errorFname").innerHTML = "Please enter a valid first name!";
+                 return false;
 
-        } else if (Surname.value == "" || Surname.value !==) {
-            document.querySelector("#errorLname").innerHTML = "Please enter a valid last name!";
-                return false;
+         } else if (Surname.value == "" || Surname.value !==) {
+             document.querySelector("#errorLname").innerHTML = "Please enter a valid last name!";
+                 return false;
 
-       } else if (StudentNo.value == "" || StudentNo.value ==null) {
-            document.querySelector("#errorStudentNo").innerHTML = "Please enter a valid 5-digit student number!";
-                return false;
+        } else if (StudentNo.value == "" || StudentNo.value ==null) {
+             document.querySelector("#errorStudentNo").innerHTML = "Please enter a valid 5-digit student number!";
+                 return false;
 
-       } else {
-            return true;
-   
-        }
-   };
+        } else {
+             return true;
 
-    </script>
+         }
+    };
+
+     </script>
 
 *@
 

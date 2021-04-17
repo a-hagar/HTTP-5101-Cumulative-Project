@@ -35,18 +35,21 @@
 
 </form>
 
-@* Comment goes here
+@* testing form validation
+
     <script defer>
         var teacherForm = document.forms.addCourse;
 
         //input variables
-        var CourseCode = addCourse.TeacherFname;
+        var CourseCode = addCourse.CourseCode;
         var CourseName = addCourse.ClassName;
         var StartDate = addCourse.StartDate;
         var FinishDate = addCourse.FinishDate;
 
+        
         var submit = document.querySelector("#submitBtn");
 
+        //course code regex
         var ValidCode = /([A-Z]){4}\d{4}/i;
 
         // date validation
@@ -81,8 +84,7 @@
                 errorDate.style.display = none;
                 return false;
             }
-
-        }
+        };
 
     </script>
 *@
