@@ -13,9 +13,6 @@ namespace HTTP_5101_Cumulative_Project.Models
         public string EmployeeNum;
         public DateTime HireDate;
         public decimal Salary;
-        public int ClassId;
-        public string ClassName;
-        public string ClassCode;
 
     }
 }

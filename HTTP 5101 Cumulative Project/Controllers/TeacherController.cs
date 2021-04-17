@@ -1,10 +1,7 @@
-﻿using System;
+﻿using HTTP_5101_Cumulative_Project.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using HTTP_5101_Cumulative_Project.Models;
 using System.Diagnostics;
+using System.Web.Mvc;
 
 namespace HTTP_5101_Cumulative_Project.Controllers
 {
@@ -40,6 +37,50 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             return View(newTeacher);
         }
 
+        //POST: /Teacher/Delete/{id}
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+
+            controller.DeleteTeacher(id);
+
+            return RedirectToAction("List");
+        }
+
+        //GET: /Teacher/DeleteConfirm/{id}
+        [HttpGet]
+        public ActionResult DeleteConfirm(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+
+            Teacher NewTeacher = controller.FindTeacher(id);
+
+            return View(NewTeacher);
+        }
+
+        //GET /Teacher/AddNew/
+        public ActionResult New()
+        {
+            return View();
+        }
+
+        //POST: /Teacher/create
+        [HttpPost]
+        public ActionResult Create(string TeacherFname, string TeacherLname, string EmployeeNum, int Salary)
+        {
+            Teacher newTeacher = new Teacher();
+            newTeacher.TeacherFname = TeacherFname;
+            newTeacher.TeacherLname = TeacherLname;
+            newTeacher.EmployeeNum = EmployeeNum;
+            newTeacher.Salary = Salary;
+
+            TeacherDataController controller = new TeacherDataController();
+
+            controller.AddTeacher(newTeacher);
+
+            return RedirectToAction("List");
+        }
     }
 
 }

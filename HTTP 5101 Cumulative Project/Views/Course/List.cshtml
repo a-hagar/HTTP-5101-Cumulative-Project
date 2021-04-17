@@ -1,0 +1,25 @@
+﻿@model IEnumerable<HTTP_5101_Cumulative_Project.Models.Course>
+@{
+    ViewBag.Title = "List";
+}
+<div>
+    <a href="/Course/New">Add New Course</a>
+</div>
+
+<h2>Courses</h2>
+<p>This pages shows a list of information of all courses in the HTTP program.</p>
+
+<form id="search" action="/Course/List" method="get">
+    <input type="text" name="SearchKey" placeholder="Enter a class name here" />
+    <input type="submit" value="Search!" />
+</form>
+<span>@Model.Count() Result(s) Found</span>
+
+<div>
+    <h2>List of Courses</h2>
+    @foreach (var Course in Model)
+    {
+        <div> <a href="/Course/Show/@Course.CourseId">@Course.CourseCode.ToUpper() @Course.CourseName</a></div>
+
+    }
+</div>

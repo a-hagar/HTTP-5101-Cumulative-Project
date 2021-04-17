@@ -1,19 +1,16 @@
 ﻿@model HTTP_5101_Cumulative_Project.Models.Teacher
 @{
     ViewBag.Title = "Show";
-}
+}<nav>
+    <a class="link" href="/Teacher/List">Back to Teachers</a>
+    <a class="dellink" href="/Teacher/DeleteConfirm/@Model.TeacherId">Delete Teacher</a>
+</nav>
 
-<a class="link" href="/Teacher/List">Back to Teachers</a>
-<div class="more-data">
-    <h2>Teacher: @Model.TeacherFname @Model.TeacherLname</h2>
-    <p>Employee #: @Model.EmployeeNum</p>
-    <p>Hire Date: @Model.HireDate.ToString("dddd, MMMM dd, yyyy")</p>
-    <p>Salary: $@Model.Salary</p>
+ <div class="more-data">
+     <h2>Teacher: @Model.TeacherFname @Model.TeacherLname</h2>
+     <p>Employee #: @Model.EmployeeNum</p>
+     <p>Hire Date: @Model.HireDate.ToString("dddd, MMMM dd, yyyy")</p>
+     <p>Salary: $@Model.Salary</p>
 
-    <p>@Model.TeacherFname is teaching :</p>
-    <ul>
 
-            <li> <a href="/Class/Show/@Model.ClassId">@Model.ClassCode.ToUpper()  @Model.ClassName</a></li>
-    </ul>
-
-</div>
+ </div>

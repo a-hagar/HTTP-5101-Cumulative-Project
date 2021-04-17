@@ -5,14 +5,11 @@ using System.Web;
 
 namespace HTTP_5101_Cumulative_Project.Models
 {
-    public class Class
+    public class Course
     {
-        public int ClassId;
-        public string ClassName;
-        public string ClassCode;
-        public int TeacherId;
-        public string TeacherFname;
-        public string TeacherLname;
+        public int CourseId;
+        public string CourseName;
+        public string CourseCode;
         public DateTime StartDate;
         public DateTime FinishDate;
     }

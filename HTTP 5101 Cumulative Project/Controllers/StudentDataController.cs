@@ -34,7 +34,7 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             MySqlCommand cmd = Conn.CreateCommand();
 
             //select query from the student table with search cababilities
-            cmd.CommandText = "SELECT studentid, studentfname, studentlname, studentnumber, enroldate from students WHERE studentfname LIKE @key OR studentlname LIKE @key  OR (concat(studentfname, ' ', studentlname)) LIKE @key";
+            cmd.CommandText = "SELECT studentid, studentfname, studentlname, studentnumber, enroldate from students WHERE studentfname LIKE @key OR studentlname LIKE @key OR (concat(studentfname, ' ', studentlname)) LIKE @key";
 
             //parameters for the searchkey
             cmd.Parameters.AddWithValue("@key", "%" + SearchKey + "%");
@@ -118,6 +118,56 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             return newStudent;
         }
 
+        //Delete a student's info
+        /// <summary>
+        /// Deletes a  student's info from the database
+        /// </summary>
+        /// example api/StudentData/DeleteStudent/200
+        ///  
+        [Route("api/StudentData/DeleteStudent/{studentid}")]
+        [HttpPost]
+
+        public void DeleteStudent(int studentid)
+        {
+
+            MySqlConnection Conn = Student.AccessDatabase();
+
+            Conn.Open();
+
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            string query = "delete from students where studentid=@id";
+            cmd.CommandText = query;
+
+            cmd.Parameters.AddWithValue("@id", studentid);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
+
+        [HttpPost]
+        public void AddStudent(Student newStudent)
+        {
+            MySqlConnection Conn = Student.AccessDatabase();
+
+            Conn.Open();
+
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            string query = "insert into students (studentfname, studentlname, studentnumber, enroldate) values(@fname, @lname, @studentnum, NOW())";
+            cmd.CommandText = query;
+
+            cmd.Parameters.AddWithValue("@fname", newStudent.StudentFname);
+            cmd.Parameters.AddWithValue("@lname", newStudent.StudentLname);
+            cmd.Parameters.AddWithValue("@studentnum", newStudent.StudentNum);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
     }
 
 }

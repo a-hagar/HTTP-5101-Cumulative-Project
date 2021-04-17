@@ -15,7 +15,6 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 
         private readonly SchoolDbContext Teacher = new SchoolDbContext();
 
-
         /// <summary>
         /// Returns a list of Teachers from the database
         /// <example> GET api/TeacherData/ListTeachers </example>
@@ -26,7 +25,7 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 
         [HttpGet]
         [Route("api/TeacherData/ListTeachers/{SearchKey?}")]
-        public IEnumerable<Teacher> ListTeachers(string SearchKey = null) 
+        public IEnumerable<Teacher> ListTeachers(string SearchKey = null)
         {
             //debug comments for searching the teacher table
             Debug.WriteLine("I am looking for  ");
@@ -50,7 +49,7 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
             //Creating a new list for classes
-            List<Teacher> Teachers = new List<Teacher>{};
+            List<Teacher> Teachers = new List<Teacher> { };
 
             while (ResultSet.Read())
             {
@@ -101,8 +100,8 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 
             MySqlCommand cmd = Conn.CreateCommand();
 
-             //select query from teachers table with search function
-            cmd.CommandText = "SELECT teachers.teacherid, teachers.teacherfname, teachers.teacherlname, teachers.employeenumber, teachers.hiredate, teachers.salary, classes.classid, classes.classname, classes.classcode FROM teachers join classes on classes.teacherid = teachers.teacherid WHERE teachers.teacherid=" + id;
+            //select query from teachers table with search function
+            cmd.CommandText = "SELECT teachers.teacherid, teachers.teacherfname, teachers.teacherlname, teachers.employeenumber, teachers.hiredate, teachers.salary FROM teachers WHERE teachers.teacherid=" + id;
 
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
@@ -115,9 +114,7 @@ namespace HTTP_5101_Cumulative_Project.Controllers
                 string EmployeeNum = (string)ResultSet["employeenumber"];
                 DateTime HireDate = (DateTime)ResultSet["hiredate"];
                 decimal Salary = (decimal)ResultSet["salary"];
-                int ClassId = (int)ResultSet["classid"];
-                string ClassName = (string)ResultSet["classname"];
-                string ClassCode = (string)ResultSet["classcode"];
+
 
                 newTeacher.TeacherId = TeacherId;
                 newTeacher.TeacherFname = TeacherFname;
@@ -125,17 +122,65 @@ namespace HTTP_5101_Cumulative_Project.Controllers
                 newTeacher.EmployeeNum = EmployeeNum;
                 newTeacher.HireDate = HireDate;
                 newTeacher.Salary = Salary;
-                newTeacher.ClassId = ClassId;
-                newTeacher.ClassCode = ClassCode;
-                newTeacher.ClassName = ClassName;
+
 
             }
+            //Returns the teacher that matches the id
             return newTeacher;
 
         }
 
+        //Delete a teacher
+        /// <summary>
+        /// Deletes a teacher from the database
+        /// </summary>
+        /// example api/TeacherData/DeleteArticle/200
+        ///  
+        [Route("api/TeacherData/DeleteTeacher/{teacherid}")]
+        [HttpPost]
 
+        public void DeleteTeacher(int teacherid)
+        {
 
+            MySqlConnection Conn = Teacher.AccessDatabase();
+
+            Conn.Open();
+
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            string query = "delete from teachers where teacherid=@id";
+            cmd.CommandText = query;
+
+            cmd.Parameters.AddWithValue("@id", teacherid);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
+
+        [HttpPost]
+        public void AddTeacher(Teacher newTeacher)
+        {
+            MySqlConnection Conn = Teacher.AccessDatabase();
+
+            Conn.Open();
+
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            string query = "insert into teachers (teacherfname, teacherlname, employeenumber, hiredate, salary) values(@fname, @lname, @employeenum, NOW(), @salary)";
+            cmd.CommandText = query;
+
+            cmd.Parameters.AddWithValue("@fname", newTeacher.TeacherFname);
+            cmd.Parameters.AddWithValue("@lname", newTeacher.TeacherLname);
+            cmd.Parameters.AddWithValue("@employeenum", newTeacher.EmployeeNum);
+            cmd.Parameters.AddWithValue("@salary", newTeacher.Salary);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
     }
 
 }

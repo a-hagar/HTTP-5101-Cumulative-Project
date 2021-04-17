@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "New";
+}
+
+<h2>New Teacher</h2>
+<p>Enter the information for a new teacher:</p>
+<form method="post" action="/Teacher/Create" name="addTeacher">
+    <div>
+        <label>Teacher's First Name</label>
+        <input type="text" name="TeacherFname" />
+        <span id="errorFname"></span>
+    </div>
+    <div>
+        <label>Teacher's Last Name</label>
+        <input type="text" name="TeacherLname" />
+        <span id="errorLname"></span>
+    </div>
+    <div>
+        <label>Teacher's Salary</label>
+        <input type="number" id="salary" step="1" name="Salary" />
+        <span id="errorSalary"></span>
+    </div>
+    <div>
+        <label>Teacher's Employee Number</label>
+        <input type="text" name="EmployeeNum" />
+        <span id="errorEmployeeNum"></span>
+    </div>
+    <div>
+        <input type="submit" value="Add Teacher" />
+    </div>
+
+</form>
+
+@* Comment goes here
+    <script defer>
+        var teacherForm = document.forms.addTeacher;
+
+        var Fname = teacherForm.TeacherFname;
+        var Surname = teacherForm.TeacherLname;
+        var TeacherNo = teacherForm.TeacherFname;
+        var EmployeeNum = teacherForm.EmployeeNum;
+        var Salary = teacherForm.Salary;
+        var submit = document.querySelector("#submitBtn");
+
+        var ValidNo = /T\{d}3/;
+
+        submit.onclick = function validStudent() {
+            if (Fname.value == "" || Fname.value !== ) {
+                document.querySelector("#errorFname").innerHTML = "Please enter a valid first name!";
+                return false;
+            } else if (Surname.value == "" || Surname.value !==) {
+                document.querySelector("#errorLname").innerHTML = "Please enter a valid last name!";
+                return false;
+            } else if (StudentNo.value == "" || StudentNo.value !== ValidNo) {
+                document.querySelector("#errorStudentNo").innerHTML = "Please enter a valid 5-digit student number!";
+                return false;
+            }
+            else {
+                return true;
+            }
+
+        }
+
+    </script>
+*@

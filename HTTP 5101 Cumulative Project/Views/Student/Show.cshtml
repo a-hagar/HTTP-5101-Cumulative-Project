@@ -2,8 +2,11 @@
 @{
     ViewBag.Title = "Show";
 }
+<nav>
+    <a class="link" href="/Student/List">Back to Students</a>
+    <a class="dellink" href="/Student/DeleteConfirm/@Model.StudentId">Delete Student</a>
+</nav>
 
-<a class="link" href="/Student/List">Back to Students</a>
 <div class="more-data">
     <h2>Student: @Model.StudentFname @Model.StudentLname</h2>
     <p>Student Id: @Model.StudentId</p>

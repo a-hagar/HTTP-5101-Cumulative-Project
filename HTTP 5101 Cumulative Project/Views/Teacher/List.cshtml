@@ -3,6 +3,10 @@
     ViewBag.Title = "List";
 }
 
+<div>
+    <a href="/Teacher/New">Add New Teacher</a>
+</div>
+
 <h2>Teachers</h2>
 <p>This pages shows a list of information of all teachers</p>
 
@@ -10,9 +14,6 @@
     <input type="text" name="SearchKey" placeholder="Enter a name here..." />
     <input type="submit" value="Search!" />
 </form>
-
-<br />
-
 
 <span >@Model.Count() Result(s) Found</span>
 

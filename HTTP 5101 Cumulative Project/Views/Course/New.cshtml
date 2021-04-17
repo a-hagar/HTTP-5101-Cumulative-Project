@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "New";
+}
+
+<h2>New Course</h2>
+<p>Enter the information for a new course:</p>
+<form method="post" action="/Class/Create" name="addCourse">
+    <div>
+        <label>Course Code: </label>
+        <input type="text" name="ClassCode" />
+        <span id="errorCourseCode"></span>
+    </div>
+    <div>
+        <label>Course Name: </label>
+        <input type="text" name="ClassName" />
+        <span id="errorCourseName"></span>
+    </div>
+    <div>
+        <label>Course Starting Date: </label>
+        <input type="date" name="StartDate" />
+        <span id="errorStartDate"></span>
+    </div>
+    <div>
+        <label>Course Final Date: </label>
+        <input type="date" name="FinishDate" />
+
+    </div>
+    <div>
+        <input type="submit" value="Add Course" id="submitBtn" />
+    </div>
+
+</form>
+
+@* Comment goes here
+    <script defer>
+        var teacherForm = document.forms.addCourse;
+
+        //input variables
+        var CourseCode = addCourse.TeacherFname;
+        var CourseName = addCourse.ClassName;
+        var StartDate = addCourse.StartDate;
+        var FinishDate = addCourse.FinishDate;
+
+        var submit = document.querySelector("#submitBtn");
+
+        var ValidCode = /([A-Z]){4}\d{4}/i;
+
+        // date validation
+        var ValidStart = StartDate.Value.getTime();
+        var ValidFinish = FinishDate.Value.getTime();
+
+        //error mgs for form validation
+        var errorCode = document.querySelector("#errorCourseCode");
+        var errorName = document.querySelector("#errorCourseName");
+        var errorDate = document.querySelector("#errorStartDate");
+
+        submit.onsubmit = function validStudent() {
+            if (CourseCode.value == "" || !ValidCode.test(CourseCode.value)) {
+                errorCode.innerHTML = "Please enter a valid first name!";
+                return false;
+
+            } else if (CourseName.value == "" || CourseName.value !== null) {
+                errorCode.style.display = none;
+                errorName.innerHTML = "Please enter a valid last name!";
+                errorDate.style.color = "white";
+                return false;
+
+            } else if (StartDate.value == "" || StartDate.value == null || FinishDate.value == "" || FinishDate.value == null || ValidStart >= ValidFinish) {
+                errorName.style.display = none;
+                errorDate.innerHTML = "Please enter a valid date range!";
+                errorDate.style.backgroundColor = "red";
+                errorDate.style.color = "white";
+                return false;
+
+            }
+            else {
+                errorDate.style.display = none;
+                return false;
+            }
+
+        }
+
+    </script>
+*@

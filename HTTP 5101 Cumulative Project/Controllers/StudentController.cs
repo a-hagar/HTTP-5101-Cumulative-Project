@@ -38,5 +38,50 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 
             return View(newStudent);
         }
+
+        //POST: /Course/Student/{id}
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            StudentDataController controller = new StudentDataController();
+
+            controller.DeleteStudent(id);
+
+            return RedirectToAction("List");
+        }
+
+        //GET: /Student/DeleteConfirm/{id}
+        [HttpGet]
+        public ActionResult DeleteConfirm(int id)
+        {
+            StudentDataController controller = new StudentDataController();
+
+            Student newStudent = controller.FindStudent(id);
+
+            return View(newStudent);
+        }
+
+        //GET /Student/New/
+        public ActionResult New()
+        {
+            return View();
+        }
+
+        //POST: /Student/Create
+        [HttpPost]
+        public ActionResult Create(string StudentFname, string StudentLname, string StudentNum)
+        {
+            Student newStudent = new Student();
+            newStudent.StudentFname = StudentFname;
+            newStudent.StudentLname = StudentLname;
+            newStudent.StudentNum = StudentNum;
+
+            StudentDataController controller = new StudentDataController();
+
+            controller.AddStudent(newStudent);
+
+            return RedirectToAction("List");
+        }
+
     }
 }
