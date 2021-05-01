@@ -4,7 +4,9 @@
 }
 <nav>
     <a class="link" href="/Student/List">Back to Students</a>
+
     <a class="dellink" href="/Student/DeleteConfirm/@Model.StudentId">Delete Student</a>
+
 </nav>
 
 <div class="more-data">
@@ -12,6 +14,8 @@
     <p>Student Id: @Model.StudentId</p>
     <p>Student #: @Model.StudentNum</p>
     <p>Enrolment Date: @Model.EnrolDate.ToString("dddd, MMMM dd , yyyy")</p>
+    <br />
 
+    <a class="link" href="/Student/Update/@Model.StudentId">Update Student</a>
 </div>
 

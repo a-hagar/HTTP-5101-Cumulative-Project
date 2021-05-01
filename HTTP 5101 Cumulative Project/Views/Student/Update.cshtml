@@ -1,0 +1,29 @@
+﻿@model HTTP_5101_Cumulative_Project.Models.Student
+@{
+    ViewBag.Title = "Update";
+}
+
+<h2>Update Student Info</h2>
+<p>What do you want to update?</p>
+
+
+<form action="/Student/Update/@Model.StudentId" method="post">
+    <div>
+        <label for="StudentFname">First Name</label>
+        <input type="text" name="StudentFname" value="@Model.StudentFname" />
+    </div>
+
+    <div>
+        <label for="StudentLname">Last Name</label>
+        <input type="text" name="StudentLname" value="@Model.StudentLname">
+    </div>
+    <div>
+        <label for="StudentNum">Student Number</label>
+        <input type="text" name="StudentNum" value="@Model.StudentNum">
+    </div>
+
+    <div>
+        <input type="submit" value="Update Student" id="submitBtn" />
+    </div>
+</form>
+

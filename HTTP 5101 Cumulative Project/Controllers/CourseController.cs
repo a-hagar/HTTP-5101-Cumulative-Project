@@ -20,7 +20,7 @@ namespace HTTP_5101_Cumulative_Project.Controllers
         public ActionResult List(string SearchKey = null)
         {
             //debug comments for searching the class table
-            Debug.WriteLine("The input search key is ");
+            Debug.WriteLine("The input search key is " + SearchKey);
             Debug.WriteLine(SearchKey);
 
             CourseDataController controller = new CourseDataController();
@@ -82,6 +82,36 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             controller.AddCourse(newCourse);
 
             return RedirectToAction("List");
+        }
+
+
+        //GET /Course/Update/{CourseId}
+        public ActionResult Update(int id)
+        {
+            CourseDataController controller = new CourseDataController();
+
+            Course SelectedCourse = controller.FindCourse(id);
+
+            return View(SelectedCourse);
+        }
+
+        [HttpPost]
+        public ActionResult Update(int id, string CourseName, string CourseCode, DateTime StartDate, DateTime FinishDate)
+        {
+            Debug.WriteLine("The updated info received is " + CourseName + " " + CourseCode);
+
+            Course CourseInfo = new Course();
+            CourseInfo.CourseId = id;
+            CourseInfo.CourseName = CourseName;
+            CourseInfo.CourseCode = CourseCode;
+            CourseInfo.StartDate = StartDate;
+            CourseInfo.FinishDate = FinishDate;
+
+            CourseDataController controller = new CourseDataController();
+
+            controller.UpdateCourse(CourseInfo);
+
+            return RedirectToAction("Show/" + id);
         }
 
     }

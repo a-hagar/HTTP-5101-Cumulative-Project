@@ -1,0 +1,36 @@
+﻿@model HTTP_5101_Cumulative_Project.Models.Course
+@{
+    ViewBag.Title = "Update";
+}
+
+<h2>Update Course Info</h2>
+<p>What do you want to update?</p>
+
+
+<form action="/Course/Update/@Model.CourseId" method="post">
+    <div>
+        <label for="CourseName">Course Name</label>
+        <input type="text" name="CourseName" value="@Model.CourseName" />
+    </div>
+
+    <div>
+        <label for="CourseCode">Course Code</label>
+        <input type="text" name="CourseCode" value="@Model.CourseCode">
+    </div>
+
+    <div>
+        <label>Course Starting Date: </label>
+        <input type="date" name="StartDate" value="@Model.StartDate"/>
+    </div>
+
+    <div>
+        <label>Course Final Date: </label>
+        <input type="date" name="FinishDate" value="@Model.FinishDate"/>
+
+    </div>
+
+    <div>
+        <input type="submit" value="Update Course" id="submitBtn" />
+    </div>
+</form>
+

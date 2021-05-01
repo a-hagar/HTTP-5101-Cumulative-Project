@@ -83,5 +83,32 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             return RedirectToAction("List");
         }
 
+        //GET /Student/Update/
+        public ActionResult Update(int id)
+        {
+            StudentDataController controller = new StudentDataController();
+
+            Student SelectedStudent = controller.FindStudent(id);
+
+            return View(SelectedStudent);
+        }
+
+        [HttpPost]
+        public ActionResult Update(int id, string StudentFname, string StudentLname, string StudentNum)
+        {
+            Debug.WriteLine("The updated info received is " + StudentFname +" "+ StudentLname +" "+ StudentNum);
+
+            Student StudentInfo = new Student();
+            StudentInfo.StudentId = id;
+            StudentInfo.StudentFname = StudentFname;
+            StudentInfo.StudentLname = StudentLname;
+            StudentInfo.StudentNum = StudentNum;
+
+            StudentDataController controller = new StudentDataController();
+
+            controller.UpdateStudent(StudentInfo);
+
+            return RedirectToAction("Show/" + id);
+        }
     }
 }

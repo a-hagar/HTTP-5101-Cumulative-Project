@@ -12,7 +12,7 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 {
     public class CourseDataController : ApiController
     {
-        private SchoolDbContext Class = new SchoolDbContext();
+        private SchoolDbContext Course = new SchoolDbContext();
 
         /// <summary>
         /// Returns a list of classes from the database
@@ -22,20 +22,19 @@ namespace HTTP_5101_Cumulative_Project.Controllers
         /// <example> GET api/CourseData/ListCourses/List?SearchKey=name</example>
         /// <returns> A result of class(es) that partially match the search term </returns>
 
-
         [HttpGet]
         [Route("api/CourseData/ListCourses/{SearchKey?}")]
         public IEnumerable<Course> ListCourses(string SearchKey = null)
         {
             //connects to database and establishes connection between server & database
-            MySqlConnection Conn = Class.AccessDatabase();
+            MySqlConnection Conn = Course.AccessDatabase();
 
             Conn.Open();
 
             MySqlCommand cmd = Conn.CreateCommand();
 
             //select query with a join with the teachers table 
-            cmd.CommandText = "SELECT classes.classid, classes.classname, classes.classcode, classes.startdate, classes.finishdate FROM classes WHERE classes.classname LIKE @key OR classes.classcode LIKE @key";
+            cmd.CommandText = "SELECT classid, classname, classcode, startdate, finishdate FROM classes WHERE classname LIKE @key OR classcode LIKE @key";
 
             //parameters for the searchkey
             cmd.Parameters.AddWithValue("@key", "%" + SearchKey + "%");
@@ -46,7 +45,7 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             //Creating a new list for classes
             List<Course> Courses = new List<Course> { };
 
-            //
+  
             while (ResultSet.Read())
             {
                 int CourseId = (int)ResultSet["classid"];
@@ -88,13 +87,17 @@ namespace HTTP_5101_Cumulative_Project.Controllers
         {
             Course newCourse = new Course();
 
-            MySqlConnection Conn = Class.AccessDatabase();
+            MySqlConnection Conn = Course.AccessDatabase();
 
             Conn.Open();
 
             MySqlCommand cmd = Conn.CreateCommand();
 
-            cmd.CommandText = "SELECT classes.classid, classes.classname, classes.classcode, classes.startdate, classes.finishdate FROM classes where classid = " + id;
+            cmd.CommandText = "SELECT classid, classname, classcode, startdate, finishdate FROM classes where classid =@id";
+
+            //parameters for the searchkey
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
 
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
@@ -122,14 +125,14 @@ namespace HTTP_5101_Cumulative_Project.Controllers
         /// Deletes a class from the database
         /// </summary>
         /// example api/CourseData/DeleteCourse/2
-        ///  
+        /// 
         [Route("api/CourseData/DeleteCourse/{courseid}")]
         [HttpPost]
 
         public void DeleteCourse(int courseid)
         {
 
-            MySqlConnection Conn = Class.AccessDatabase();
+            MySqlConnection Conn = Course.AccessDatabase();
 
             Conn.Open();
 
@@ -146,11 +149,16 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             Conn.Close();
         }
 
-
+        /// <summary>
+        /// Adds Course  to the database
+        /// </summary>
+        /// <param name="NewCourse"> Maps the new inputs from view to the database </param>
+        /// example api/CourseData/AddCourse/        
+        /// 
         [HttpPost]
         public void AddCourse(Course newCourse)
         {
-            MySqlConnection Conn = Class.AccessDatabase();
+            MySqlConnection Conn = Course.AccessDatabase();
 
             Conn.Open();
 
@@ -160,6 +168,7 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             cmd.CommandText = query;
 
             cmd.Parameters.AddWithValue("@code", newCourse.CourseCode);
+            cmd.Parameters.AddWithValue("@name", newCourse.CourseName);
             cmd.Parameters.AddWithValue("@startdate", newCourse.StartDate);
             cmd.Parameters.AddWithValue("@finishdate", newCourse.FinishDate);
             cmd.Parameters.AddWithValue("@name", newCourse.CourseName);
@@ -169,6 +178,37 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 
             Conn.Close();
         }
-    }
 
+        /// <summary>
+        /// Changes existing course data from the database
+        /// </summary>
+        /// <param name="CourseInfo"> Maps the changed inputs from view to the database </param>
+        /// example api/CourseData/UpdateCourse/1   
+        ///     
+        /// 
+        [HttpPost]
+        public void UpdateCourse(Course CourseInfo)
+        {
+            MySqlConnection Conn = Course.AccessDatabase();
+
+            Conn.Open();
+
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            cmd.CommandText = "update classes set classcode=@code, classname=@name, startdate=@startdate, finishdate=@finishdate where classid=@id";
+
+
+            cmd.Parameters.AddWithValue("@id", CourseInfo.CourseId);
+            cmd.Parameters.AddWithValue("@code", CourseInfo.CourseCode);
+            cmd.Parameters.AddWithValue("@name", CourseInfo.CourseName);
+            cmd.Parameters.AddWithValue("@startdate", CourseInfo.StartDate);
+            cmd.Parameters.AddWithValue("@finishdate", CourseInfo.FinishDate);
+
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
+    }
 }

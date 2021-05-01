@@ -101,7 +101,11 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             MySqlCommand cmd = Conn.CreateCommand();
 
             //select query from teachers table with search function
-            cmd.CommandText = "SELECT teachers.teacherid, teachers.teacherfname, teachers.teacherlname, teachers.employeenumber, teachers.hiredate, teachers.salary FROM teachers WHERE teachers.teacherid=" + id;
+            cmd.CommandText = "SELECT teachers.teacherid, teachers.teacherfname, teachers.teacherlname, teachers.employeenumber, teachers.hiredate, teachers.salary FROM teachers WHERE teachers.teacherid= @id";
+            
+            //parameters for the searchkey
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
 
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
@@ -175,6 +179,30 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             cmd.Parameters.AddWithValue("@lname", newTeacher.TeacherLname);
             cmd.Parameters.AddWithValue("@employeenum", newTeacher.EmployeeNum);
             cmd.Parameters.AddWithValue("@salary", newTeacher.Salary);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
+
+
+        [HttpPost]
+        public void UpdateTeacher(Teacher TeacherInfo)
+        {
+            MySqlConnection Conn = Teacher.AccessDatabase();
+
+            Conn.Open();
+
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            cmd.CommandText = "update teachers set teacherfname=@fname, teacherlname=@lname, employeenumber=@num, salary=@salary where teacherid=@id";
+
+            cmd.Parameters.AddWithValue("@id", TeacherInfo.TeacherId); cmd.Parameters.AddWithValue("@fname", TeacherInfo.TeacherFname);
+            cmd.Parameters.AddWithValue("@lname", TeacherInfo.TeacherLname);
+            cmd.Parameters.AddWithValue("@num", TeacherInfo.EmployeeNum);
+            cmd.Parameters.AddWithValue("@salary", TeacherInfo.Salary);
+
             cmd.Prepare();
 
             cmd.ExecuteNonQuery();

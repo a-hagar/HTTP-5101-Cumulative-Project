@@ -94,7 +94,11 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             MySqlCommand cmd = Conn.CreateCommand();
 
             //select query from the student table with where statement 
-            cmd.CommandText = "SELECT studentid, studentfname, studentlname, studentnumber, enroldate from students where studentid = " + id;
+            cmd.CommandText = "SELECT studentid, studentfname, studentlname, studentnumber, enroldate from students where studentid = @id";
+
+            //parameters for the searchkey
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
 
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
@@ -162,6 +166,30 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             cmd.Parameters.AddWithValue("@fname", newStudent.StudentFname);
             cmd.Parameters.AddWithValue("@lname", newStudent.StudentLname);
             cmd.Parameters.AddWithValue("@studentnum", newStudent.StudentNum);
+
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
+        
+        [HttpPost]
+        public void UpdateStudent(Student StudentInfo)
+        {
+            MySqlConnection Conn = Student.AccessDatabase();
+
+            Conn.Open();
+
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            cmd.CommandText = "update students set studentfname=@fname, studentlname=@lname, studentnumber=@num where studentid=@id";
+
+            cmd.Parameters.AddWithValue("@id", StudentInfo.StudentId);
+            cmd.Parameters.AddWithValue("@fname", StudentInfo.StudentFname);
+            cmd.Parameters.AddWithValue("@lname", StudentInfo.StudentLname);
+            cmd.Parameters.AddWithValue("@num", StudentInfo.StudentNum);
+
             cmd.Prepare();
 
             cmd.ExecuteNonQuery();
