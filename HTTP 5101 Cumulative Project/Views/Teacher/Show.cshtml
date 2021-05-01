@@ -6,11 +6,13 @@
     <a class="dellink" href="/Teacher/DeleteConfirm/@Model.TeacherId">Delete Teacher</a>
 </nav>
 
- <div class="more-data">
-     <h2>Teacher: @Model.TeacherFname @Model.TeacherLname</h2>
-     <p>Employee #: @Model.EmployeeNum</p>
-     <p>Hire Date: @Model.HireDate.ToString("dddd, MMMM dd, yyyy")</p>
-     <p>Salary: $@Model.Salary</p>
+<div class="more-data">
+    <h2>Teacher: @Model.TeacherFname @Model.TeacherLname</h2>
+    <p>Employee #: @Model.EmployeeNum</p>
+    <p>Hire Date: @Model.HireDate.ToString("dddd, MMMM dd, yyyy")</p>
+    <p>Salary: $@Model.Salary</p>
 
-     <a class="link" href="/Teacher/Update/@Model.TeacherId">Update Teacher</a>
- </div>
+
+</div>
+
+<a class="uplink" href="/Teacher/Update/@Model.TeacherId">Update Teacher</a>

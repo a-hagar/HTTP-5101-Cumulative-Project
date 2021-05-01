@@ -21,7 +21,6 @@ namespace HTTP_5101_Cumulative_Project.Controllers
         /// <returns> A list of classes names, course codes, and the ids and names of the teachers of the course </returns>
         /// <example> GET api/CourseData/ListCourses/List?SearchKey=name</example>
         /// <returns> A result of class(es) that partially match the search term </returns>
-
         [HttpGet]
         [Route("api/CourseData/ListCourses/{SearchKey?}")]
         public IEnumerable<Course> ListCourses(string SearchKey = null)
@@ -36,7 +35,7 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             //select query with a join with the teachers table 
             cmd.CommandText = "SELECT classid, classname, classcode, startdate, finishdate FROM classes WHERE classname LIKE @key OR classcode LIKE @key";
 
-            //parameters for the searchkey
+            //sql parameters to avoid injections
             cmd.Parameters.AddWithValue("@key", "%" + SearchKey + "%");
             cmd.Prepare();
 
@@ -95,7 +94,7 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 
             cmd.CommandText = "SELECT classid, classname, classcode, startdate, finishdate FROM classes where classid =@id";
 
-            //parameters for the searchkey
+            //sql parameters to avoid injections
             cmd.Parameters.AddWithValue("@id", id);
             cmd.Prepare();
 
@@ -128,7 +127,6 @@ namespace HTTP_5101_Cumulative_Project.Controllers
         /// 
         [Route("api/CourseData/DeleteCourse/{courseid}")]
         [HttpPost]
-
         public void DeleteCourse(int courseid)
         {
 
@@ -141,6 +139,7 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             string query = "delete from classes where classid=@id";
             cmd.CommandText = query;
 
+            //sql parameters to avoid injections
             cmd.Parameters.AddWithValue("@id", courseid);
             cmd.Prepare();
 
@@ -150,10 +149,10 @@ namespace HTTP_5101_Cumulative_Project.Controllers
         }
 
         /// <summary>
-        /// Adds Course  to the database
+        /// Adds a new course to the database
         /// </summary>
         /// <param name="NewCourse"> Maps the new inputs from view to the database </param>
-        /// example api/CourseData/AddCourse/        
+        /// example api/Course/AddCourse/        
         /// 
         [HttpPost]
         public void AddCourse(Course newCourse)
@@ -167,6 +166,7 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             string query = "insert into classes (classcode, startdate, finishdate, classname) values(@code, @startdate, @finishdate, @name)";
             cmd.CommandText = query;
 
+            //sql parameters to avoid injections
             cmd.Parameters.AddWithValue("@code", newCourse.CourseCode);
             cmd.Parameters.AddWithValue("@name", newCourse.CourseName);
             cmd.Parameters.AddWithValue("@startdate", newCourse.StartDate);
@@ -183,8 +183,7 @@ namespace HTTP_5101_Cumulative_Project.Controllers
         /// Changes existing course data from the database
         /// </summary>
         /// <param name="CourseInfo"> Maps the changed inputs from view to the database </param>
-        /// example api/CourseData/UpdateCourse/1   
-        ///     
+        /// example api/Course/UpdateCourse/1      
         /// 
         [HttpPost]
         public void UpdateCourse(Course CourseInfo)

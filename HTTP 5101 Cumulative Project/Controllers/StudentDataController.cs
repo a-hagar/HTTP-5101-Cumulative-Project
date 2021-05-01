@@ -96,7 +96,7 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             //select query from the student table with where statement 
             cmd.CommandText = "SELECT studentid, studentfname, studentlname, studentnumber, enroldate from students where studentid = @id";
 
-            //parameters for the searchkey
+            //sql parameters to avoid injections
             cmd.Parameters.AddWithValue("@id", id);
             cmd.Prepare();
 
@@ -140,9 +140,11 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 
             MySqlCommand cmd = Conn.CreateCommand();
 
+            //select query from teachers table with delete function
             string query = "delete from students where studentid=@id";
             cmd.CommandText = query;
 
+            //sql parameters to avoid injections
             cmd.Parameters.AddWithValue("@id", studentid);
             cmd.Prepare();
 
@@ -151,6 +153,12 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             Conn.Close();
         }
 
+        /// <summary>
+        /// Adds a new student to the database
+        /// </summary>
+        /// <param name="newStudent"> Maps the new inputs from view to the database </param>
+        /// example api/Student/AddStudent/        
+        /// 
         [HttpPost]
         public void AddStudent(Student newStudent)
         {
@@ -162,7 +170,8 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 
             string query = "insert into students (studentfname, studentlname, studentnumber, enroldate) values(@fname, @lname, @studentnum, NOW())";
             cmd.CommandText = query;
-
+            
+            //sql parameters to avoid injections
             cmd.Parameters.AddWithValue("@fname", newStudent.StudentFname);
             cmd.Parameters.AddWithValue("@lname", newStudent.StudentLname);
             cmd.Parameters.AddWithValue("@studentnum", newStudent.StudentNum);
@@ -173,7 +182,14 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 
             Conn.Close();
         }
-        
+
+
+        /// <summary>
+        /// Changes existing student data to the database
+        /// </summary>
+        /// <param name="StudentInfo"> Maps the changed inputs from view to the database </param>
+        /// example api/Student/UpdateStudent/1      
+        /// 
         [HttpPost]
         public void UpdateStudent(Student StudentInfo)
         {
@@ -185,6 +201,7 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 
             cmd.CommandText = "update students set studentfname=@fname, studentlname=@lname, studentnumber=@num where studentid=@id";
 
+            //sql parameters to avoid injections
             cmd.Parameters.AddWithValue("@id", StudentInfo.StudentId);
             cmd.Parameters.AddWithValue("@fname", StudentInfo.StudentFname);
             cmd.Parameters.AddWithValue("@lname", StudentInfo.StudentLname);

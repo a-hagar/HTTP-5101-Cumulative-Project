@@ -42,7 +42,7 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             //select query from teachers table with search function
             cmd.CommandText = "SELECT teachers.teacherid, teachers.teacherfname, teachers.teacherlname, teachers.employeenumber, teachers.hiredate, teachers.salary FROM teachers WHERE teachers.teacherfname LIKE @key OR teachers.teacherlname LIKE @key OR (concat(teacherfname, ' ', teacherlname)) LIKE @key";
 
-            //parameters for the searchkey
+            //sql parameters to avoid injections
             cmd.Parameters.AddWithValue("@key", "%" + SearchKey + "%");
             cmd.Prepare();
 
@@ -102,8 +102,8 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 
             //select query from teachers table with search function
             cmd.CommandText = "SELECT teachers.teacherid, teachers.teacherfname, teachers.teacherlname, teachers.employeenumber, teachers.hiredate, teachers.salary FROM teachers WHERE teachers.teacherid= @id";
-            
-            //parameters for the searchkey
+
+            //sql parameters to avoid injections
             cmd.Parameters.AddWithValue("@id", id);
             cmd.Prepare();
 
@@ -142,7 +142,6 @@ namespace HTTP_5101_Cumulative_Project.Controllers
         ///  
         [Route("api/TeacherData/DeleteTeacher/{teacherid}")]
         [HttpPost]
-
         public void DeleteTeacher(int teacherid)
         {
 
@@ -152,9 +151,11 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 
             MySqlCommand cmd = Conn.CreateCommand();
 
+            //select query from teachers table with delete function
             string query = "delete from teachers where teacherid=@id";
             cmd.CommandText = query;
 
+            //sql parameters to avoid injections
             cmd.Parameters.AddWithValue("@id", teacherid);
             cmd.Prepare();
 
@@ -163,6 +164,12 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             Conn.Close();
         }
 
+        /// <summary>
+        /// Adds a new course to the database
+        /// </summary>
+        /// <param name="NewCourse"> Maps the new inputs from view to the database </param>
+        /// example api/Teacher/AddTeacher/        
+        /// 
         [HttpPost]
         public void AddTeacher(Teacher newTeacher)
         {
@@ -172,9 +179,11 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 
             MySqlCommand cmd = Conn.CreateCommand();
 
+            //select query from teachers table with insert function
             string query = "insert into teachers (teacherfname, teacherlname, employeenumber, hiredate, salary) values(@fname, @lname, @employeenum, NOW(), @salary)";
             cmd.CommandText = query;
 
+            //sql parameters to avoid injections
             cmd.Parameters.AddWithValue("@fname", newTeacher.TeacherFname);
             cmd.Parameters.AddWithValue("@lname", newTeacher.TeacherLname);
             cmd.Parameters.AddWithValue("@employeenum", newTeacher.EmployeeNum);
@@ -186,7 +195,12 @@ namespace HTTP_5101_Cumulative_Project.Controllers
             Conn.Close();
         }
 
-
+        /// <summary>
+        /// Changes existing teacher data to the database
+        /// </summary>
+        /// <param name="TeacherInfo"> Maps the changed inputs from view to the database </param>
+        /// example api/Teacher/UpdateTeacher/1      
+        /// 
         [HttpPost]
         public void UpdateTeacher(Teacher TeacherInfo)
         {
@@ -196,8 +210,10 @@ namespace HTTP_5101_Cumulative_Project.Controllers
 
             MySqlCommand cmd = Conn.CreateCommand();
 
+            //select query from teachers table with update function
             cmd.CommandText = "update teachers set teacherfname=@fname, teacherlname=@lname, employeenumber=@num, salary=@salary where teacherid=@id";
 
+            //sql parameters to avoid injections
             cmd.Parameters.AddWithValue("@id", TeacherInfo.TeacherId); cmd.Parameters.AddWithValue("@fname", TeacherInfo.TeacherFname);
             cmd.Parameters.AddWithValue("@lname", TeacherInfo.TeacherLname);
             cmd.Parameters.AddWithValue("@num", TeacherInfo.EmployeeNum);
